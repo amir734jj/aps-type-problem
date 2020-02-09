@@ -13,3 +13,7 @@ Information:2/9/20, 2:30 AM - Build completed with 1 error and 0 warnings in 1 s
     (which expands to)  C_TYPE[Int] with C_MAX_LATTICE[Int,Int]
   val t_IntegerMaxLattice = new M_MAX_LATTICE[T_Integer]("IntegerMaxLattice",t_Integer,0);
   ```
+
+## Update
+
+Solution was to make `M_MAX_LATTICE` and `M_MIN_LATTICE` implement `C_TYPE[T]` trait
