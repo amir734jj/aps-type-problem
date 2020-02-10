@@ -489,7 +489,6 @@ class M_MAX_LATTICE[T_TO]
     new M__basic_13[ T_TO](t_TO).v_min)
     with C_MAX_LATTICE[T_TO,T_TO] with C_ORDERED[T_TO]
     with C_TYPE[T_TO]
-    with C_NUMERIC[T_TO]
 {
   val v_less = t_TO.v_less;
   val v_less_equal = t_TO.v_less_equal;
@@ -498,19 +497,6 @@ class M_MAX_LATTICE[T_TO]
   override val v_assert: T_TO => Unit = _ => ()
   override val v_node_equivalent: (T_TO, T_TO) => T_OrLattice = (a, b) => a == b
   override val v_string: T_TO => String = _ => ""
-
-  override def v_zero: T_TO = v_min_element
-
-  override def v_one: T_TO = ???
-
-  override val v_plus: (T_TO, T_TO) => T_TO = _
-  override val v_minus: (T_TO, T_TO) => T_TO = _
-  override val v_times: (T_TO, T_TO) => T_TO = _
-  override val v_divide: (T_TO, T_TO) => T_TO = _
-  override val v_unary_plus: T_TO => T_TO = _
-  override val v_unary_minus: T_TO => T_TO = _
-  override val v_unary_times: T_TO => T_TO = _
-  override val v_unary_divide: T_TO => T_TO = _
 }
 
 trait C_MIN_LATTICE[T_Result, T_T] extends

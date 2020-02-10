@@ -11,14 +11,12 @@ import tiny_circular_simple_implicit._;
 import basic_implicit._;
 import tiny_implicit._;
 trait C_TINY_CIRCULAR_SIMPLE[T_Result, T_T] extends C_TYPE[T_Result] with C_TINY[T_Result] {
-  type T_Integers;
-  val t_Integers : C_TYPE[T_Integers]with C_INTEGER[T_Integers];
   type T_IntegerLattice;
   val t_IntegerLattice : C_TYPE[T_IntegerLattice]with C_MAX_LATTICE[T_IntegerLattice,T_Integer];
   val v_s_bag1 : (T_Wood) => T_IntegerLattice;
   val v_s_bag2 : (T_Wood) => T_IntegerLattice;
   val v_s : (T_Wood) => T_Integer;
-  val v_result : (T_Root) => T_Integers;
+  val v_result : (T_Root) => T_Integer;
 }
 
 class M_TINY_CIRCULAR_SIMPLE[T_T](name : String,val t_T : C_TYPE[T_T] with C_TINY[T_T])
@@ -42,8 +40,6 @@ class M_TINY_CIRCULAR_SIMPLE[T_T](name : String,val t_T : C_TYPE[T_T] with C_TIN
   val v_leaf = t_T.v_leaf;
 
   val t_Result : this.type = this;
-  type T_Integers = T_Integer;
-  val t_Integers = t_Integer;
   val t_IntegerLattice = new M_MAX_LATTICE[T_Integer]("IntegerLattice",t_Integer,0);
   type T_IntegerLattice = /*TI*/T_MAX_LATTICE[T_Integer];
   private class E_s_bag1(anchor : T_Wood) extends Evaluation[T_Wood,T_IntegerLattice](anchor,anchor.toString()+"."+"s_bag1") with CircularEvaluation[T_Wood,T_IntegerLattice] {
@@ -74,13 +70,13 @@ class M_TINY_CIRCULAR_SIMPLE[T_T](name : String,val t_T : C_TYPE[T_T] with C_TIN
   }
   val v_s : T_Wood => T_Integer = a_s.get _;
 
-  private class E_result(anchor : T_Root) extends Evaluation[T_Root,T_Integers](anchor,anchor.toString()+"."+"result") {
+  private class E_result(anchor : T_Root) extends Evaluation[T_Root,T_Integer](anchor,anchor.toString()+"."+"result") {
     override def compute : ValueType = c_result(anchor);
   }
-  private object a_result extends Attribute[T_Root,T_Integers](t_Root,t_Integers,"result") {
-    override def createEvaluation(anchor : T_Root) : Evaluation[T_Root,T_Integers] = new E_result(anchor);
+  private object a_result extends Attribute[T_Root,T_Integer](t_Root,t_Integer,"result") {
+    override def createEvaluation(anchor : T_Root) : Evaluation[T_Root,T_Integer] = new E_result(anchor);
   }
-  val v_result : T_Root => T_Integers = a_result.get _;
+  val v_result : T_Root => T_Integer = a_result.get _;
 
   private class E1_i(anchor : t_Result.T_Wood) extends Evaluation[t_Result.T_Wood,T_IntegerLattice](anchor,anchor.toString()+"."+"i") with CircularEvaluation[t_Result.T_Wood,T_IntegerLattice] {
     def lattice() : C_LATTICE[T_IntegerLattice] = t_IntegerLattice;
@@ -122,8 +118,7 @@ class M_TINY_CIRCULAR_SIMPLE[T_T](name : String,val t_T : C_TYPE[T_T] with C_TIN
     }
     anchor match {
       case p_branch(v_b,v_x,v_y) => {
-        val amir: C_NUMERIC[T_Integer] = t_IntegerLattice
-        if (anode eq v_b) return new M__basic_4[ T_IntegerLattice](amir).v__op_s(v_s_bag1(v_x),v_s_bag1(v_y));
+        if (anode eq v_b) return new M__basic_4[ T_IntegerLattice](t_IntegerLattice).v__op_s(v_s_bag1(v_x),v_s_bag1(v_y));
       }
       case _ => {}
     }
@@ -165,7 +160,7 @@ class M_TINY_CIRCULAR_SIMPLE[T_T](name : String,val t_T : C_TYPE[T_T] with C_TIN
     }
     throw Evaluation.UndefinedAttributeException(anode.toString()+".s");
   }
-  def c_result(anode : T_Root) : T_Integers = {
+  def c_result(anode : T_Root) : T_Integer = {
     val anchor = anode;
     anchor match {
       case p_root(v_p,v_b) => {
@@ -184,4 +179,3 @@ class M_TINY_CIRCULAR_SIMPLE[T_T](name : String,val t_T : C_TYPE[T_T] with C_TIN
   }
 
 }
-
