@@ -11,6 +11,7 @@ import tiny_implicit._;
 trait C_TEST_COLL[T_Result, T_T] extends C_TYPE[T_Result] with C_TINY[T_Result] {
   type T_IntegerMaxLattice;
   val t_IntegerMaxLattice : C_TYPE[T_IntegerMaxLattice]with C_MAX_LATTICE[T_IntegerMaxLattice,T_Integer];
+  def v_taha : T_IntegerMaxLattice;
   type T_Integers;
   val t_Integers : C_TYPE[T_Integers]with C_SET[T_Integers,T_Integer];
   def v_sum : T_Integer;
@@ -41,6 +42,13 @@ class M_TEST_COLL[T_T](name : String,val t_T : C_TYPE[T_T] with C_TINY[T_T])
   val t_Result : this.type = this;
   val t_IntegerMaxLattice = new M_MAX_LATTICE[T_Integer]("IntegerMaxLattice",t_Integer,0);
   type T_IntegerMaxLattice = /*TI*/T_MAX_LATTICE[T_Integer];
+  private class E_taha(anchor : Null) extends Evaluation[Null,T_IntegerMaxLattice](anchor,"taha") {
+    override def getDefault = new M__basic_4[ T_IntegerMaxLattice](t_IntegerMaxLattice).v__op_s(1,2);
+    override def compute : ValueType = c_taha();
+  }
+  private object a_taha extends E_taha(null) {}
+  def v_taha:T_IntegerMaxLattice = a_taha.get;
+
   val t_Integers = new M_SET[T_Integer]("Integers",t_Integer);
   type T_Integers = /*TI*/T_SET[T_Integer];
   private class E_sum(anchor : Null) extends Evaluation[Null,T_Integer](anchor,"sum") with CollectionEvaluation[Null,T_Integer] {
@@ -77,6 +85,12 @@ class M_TEST_COLL[T_T](name : String,val t_T : C_TYPE[T_T] with C_TINY[T_T])
     }
     throw Evaluation.UndefinedAttributeException(anode.toString()+".result");
   }
+  def c_taha() : T_IntegerMaxLattice = {
+    Debug.begin("taha");
+    try {
+      return new M__basic_4[ T_IntegerMaxLattice](t_IntegerMaxLattice).v__op_s(1,2);
+    } finally { Debug.end(); }
+  }
   def c_sum() : T_Integer = {
     Debug.begin("sum");
     try {
@@ -100,6 +114,7 @@ class M_TEST_COLL[T_T](name : String,val t_T : C_TYPE[T_T] with C_TINY[T_T])
     } finally { Debug.end(); }
   }
   override def finish() : Unit = {
+    a_taha.get;
     a_sum.get;
     a_leaves.get;
     a_result.finish;
@@ -107,3 +122,4 @@ class M_TEST_COLL[T_T](name : String,val t_T : C_TYPE[T_T] with C_TINY[T_T])
   }
 
 }
+
