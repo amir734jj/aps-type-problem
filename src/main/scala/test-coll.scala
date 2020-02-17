@@ -10,7 +10,7 @@ import test_coll_implicit._;
 import tiny_implicit._;
 trait C_TEST_COLL[T_Result, T_T] extends C_TYPE[T_Result] with C_TINY[T_Result] {
   type T_IntegerMaxLattice;
-  val t_IntegerMaxLattice : C_TYPE[T_IntegerMaxLattice]with C_MAX_LATTICE[T_IntegerMaxLattice,T_Integer];
+  val t_IntegerMaxLattice : C_NULL[T_IntegerMaxLattice]with C_MAX_LATTICE[T_IntegerMaxLattice,T_Integer];
   def v_taha : T_IntegerMaxLattice;
   type T_Integers;
   val t_Integers : C_TYPE[T_Integers]with C_SET[T_Integers,T_Integer];
@@ -40,7 +40,7 @@ class M_TEST_COLL[T_T](name : String,val t_T : C_TYPE[T_T] with C_TINY[T_T])
   val v_leaf = t_T.v_leaf;
 
   val t_Result : this.type = this;
-  val t_IntegerMaxLattice = new M_MAX_LATTICE[T_Integer]("IntegerMaxLattice",t_Integer,0);
+  val t_IntegerMaxLattice = new M_MAX_LATTICE_Numeric[T_Integer]("IntegerMaxLattice",t_Integer,0);
   type T_IntegerMaxLattice = /*TI*/T_MAX_LATTICE[T_Integer];
   private class E_taha(anchor : Null) extends Evaluation[Null,T_IntegerMaxLattice](anchor,"taha") {
     override def getDefault = new M__basic_4[ T_IntegerMaxLattice](t_IntegerMaxLattice).v__op_s(1,2);
