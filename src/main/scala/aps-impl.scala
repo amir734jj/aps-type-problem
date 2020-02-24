@@ -282,7 +282,7 @@ extends Module("Attribute " + name)
   type NodeType = T_P;
   type ValueType = T_V;
   import Evaluation._;
-
+1
   private val evaluations : Buffer[Evaluation[T_P,T_V]] = new ArrayBuffer();
   private var evaluationStarted : Boolean = false;
 
