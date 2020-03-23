@@ -40,6 +40,10 @@ class M_TINY_CIRCULAR_SIMPLE[T_T](name : String,val t_T : C_TYPE[T_T] with C_TIN
     def lattice() : C_LATTICE[T_IntegerLattice] = t_IntegerLattice;
 
     override def compute : ValueType = c_s_bag1(anchor);
+
+    {
+      detectedCycle
+    }
   }
   private object a_s_bag1 extends Attribute[T_Wood,T_IntegerLattice](t_Wood,t_IntegerLattice,"s_bag1") {
     override def createEvaluation(anchor : T_Wood) : Evaluation[T_Wood,T_IntegerLattice] = new E_s_bag1(anchor);
@@ -50,6 +54,10 @@ class M_TINY_CIRCULAR_SIMPLE[T_T](name : String,val t_T : C_TYPE[T_T] with C_TIN
     def lattice() : C_LATTICE[T_IntegerLattice] = t_IntegerLattice;
 
     override def compute : ValueType = c_s_bag2(anchor);
+
+    {
+      detectedCycle
+    }
   }
   private object a_s_bag2 extends Attribute[T_Wood,T_IntegerLattice](t_Wood,t_IntegerLattice,"s_bag2") {
     override def createEvaluation(anchor : T_Wood) : Evaluation[T_Wood,T_IntegerLattice] = new E_s_bag2(anchor);
@@ -76,6 +84,10 @@ class M_TINY_CIRCULAR_SIMPLE[T_T](name : String,val t_T : C_TYPE[T_T] with C_TIN
     def lattice() : C_LATTICE[T_IntegerLattice] = t_IntegerLattice;
 
     override def compute : ValueType = c1_i(anchor);
+
+    {
+      detectedCycle
+    }
   }
   private object a1_i extends Attribute[t_Result.T_Wood,T_IntegerLattice](t_Result.t_Wood,t_IntegerLattice,"i") {
     override def createEvaluation(anchor : t_Result.T_Wood) : Evaluation[t_Result.T_Wood,T_IntegerLattice] = new E1_i(anchor);
@@ -84,15 +96,24 @@ class M_TINY_CIRCULAR_SIMPLE[T_T](name : String,val t_T : C_TYPE[T_T] with C_TIN
     def lattice() : C_LATTICE[T_IntegerLattice] = t_IntegerLattice;
 
     override def compute : ValueType = c2_i(anchor);
+
+    {
+      detectedCycle
+    }
   }
   private object a2_i extends Attribute[t_Result.T_Root,T_IntegerLattice](t_Result.t_Root,t_IntegerLattice,"i") {
     override def createEvaluation(anchor : t_Result.T_Root) : Evaluation[t_Result.T_Root,T_IntegerLattice] = new E2_i(anchor);
   }
-  def visit_0_1(node : T_Root) : Unit = node match {
-    case p_root(_,_) => visit_0_1_0(node);
-  };
+  def visit_0_1(node : T_Root) : Unit = {
+    println("visit_0_1: root")
+    node match {
+      case p_root(_,_) => visit_0_1_0(node);
+    };
+  }
   def visit_0_1_0(anchor : T_Root) : Unit = anchor match {
     case p_root(v_p,v_b) => {
+      println("visit_0_1_0: root")
+
       // p.G[Root]'shared_info is ready now.
       // shared info for b is ready.
       visit_1_1(v_b);
@@ -106,16 +127,24 @@ class M_TINY_CIRCULAR_SIMPLE[T_T](name : String,val t_T : C_TYPE[T_T] with C_TIN
   }
 
 
-  def visit_1_1(node : T_Wood) : Unit = node match {
-    case p_leaf(_,_) => visit_1_1_1(node);
-    case p_branch(_,_,_) => visit_1_1_0(node);
-  };
-  def visit_1_2(node : T_Wood) : Unit = node match {
-    case p_leaf(_,_) => visit_1_2_1(node);
-    case p_branch(_,_,_) => visit_1_2_0(node);
-  };
+  def visit_1_1(node : T_Wood) : Unit = {
+    println("visit_1_1: wood")
+    node match {
+      case p_leaf(_,_) => visit_1_1_1(node);
+      case p_branch(_,_,_) => visit_1_1_0(node);
+    };
+  }
+  def visit_1_2(node : T_Wood) : Unit = {
+    println("visit_1_2: wood")
+    node match {
+      case p_leaf(_,_) => visit_1_2_1(node);
+      case p_branch(_,_,_) => visit_1_2_0(node);
+    };
+  }
   def visit_1_1_1(anchor : T_Wood) : Unit = anchor match {
     case p_leaf(v_l,v_x) => {
+      println("visit_1_1_1: leaf")
+
       // l.G[Wood]'shared_info is ready now.
       a_s_bag1.assign(v_l,v_x);
     }
@@ -123,6 +152,8 @@ class M_TINY_CIRCULAR_SIMPLE[T_T](name : String,val t_T : C_TYPE[T_T] with C_TIN
 
   def visit_1_2_1(anchor : T_Wood) : Unit = anchor match {
     case p_leaf(v_l,v_x) => {
+      println("visit_1_2_1: leaf")
+
       // l.s_bag2 is ready now.
       a_s.assign(v_l,a_s_bag2.get(v_l));
     }
@@ -130,6 +161,8 @@ class M_TINY_CIRCULAR_SIMPLE[T_T](name : String,val t_T : C_TYPE[T_T] with C_TIN
 
   def visit_1_1_0(anchor : T_Wood) : Unit = anchor match {
     case p_branch(v_b,v_x,v_y) => {
+      println("visit_1_1_0: branch")
+
       // b.G[Wood]'shared_info is ready now.
       // shared info for x is ready.
       visit_1_1(v_x);
@@ -143,6 +176,8 @@ class M_TINY_CIRCULAR_SIMPLE[T_T](name : String,val t_T : C_TYPE[T_T] with C_TIN
 
   def visit_1_2_0(anchor : T_Wood) : Unit = anchor match {
     case p_branch(v_b,v_x,v_y) => {
+      println("visit_1_2_0: branch")
+
       // b.s_bag2 is ready now.
       a1_i.assign(anchor,a_s_bag2.get(v_b));
       a_s_bag2.assign(v_x,a1_i.get(anchor));

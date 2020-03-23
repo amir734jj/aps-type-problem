@@ -26,8 +26,8 @@ object Debug {
 
   def out(s : String) = {
     if (active) {
-      indent();
-      println(s);
+       // indent();
+       // println(s);
     }
   }
 
@@ -37,8 +37,8 @@ object Debug {
 
   def returns(s : Any) = {
     if (active) {
-      indent();
-      println("=> " + s);
+      // indent();
+       // println("=> " + s);
     }
   }
 
@@ -59,7 +59,7 @@ class Module(val mname : String) {
   private var complete : Boolean = false;
   def finish() : Unit = {
     if (Debug.active) {
-      println("Type " + mname + " is now finished.");
+       println("Type " + mname + " is now finished.");
     }
     complete = true; 
   }
@@ -131,7 +131,7 @@ class Nodes[T_Result <: Node] extends ArrayBuffer[T_Result] {
     assert (!_frozen);
     val result = size;
     this += x.asInstanceOf[T_Result];
-    // println("registering " + x + " as #" + result);
+     println("registering " + x + " as #" + result);
     result
   };
 }
@@ -310,7 +310,7 @@ extends Module("Attribute " + name)
     {
       val nn = n.myType.nodes(num);
       if (n != nn) {
-	println("Got " + n + "'s number as " + num + ", but the node with that number is " + nn);
+	 println("Got " + n + "'s number as " + num + ", but the node with that number is " + nn);
       }
       assert (n == nn);
     }
@@ -405,6 +405,10 @@ class CircularHelper(var cycleLast : CircularEvaluation[_,_]) {
 
 trait CircularEvaluation[V_P, V_T] extends Evaluation[V_P,V_T] {
   import Evaluation._;
+
+  {
+    detectedCycle
+  }
 
   def lattice : C_LATTICE[ValueType];
   

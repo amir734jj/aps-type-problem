@@ -18,5 +18,4 @@ object TinyCircularDriver extends App
 
     println("s: " + m2.v_s);
 
-    println("Hello world!")
 }
